@@ -44,37 +44,19 @@
                     </a>
                 </li>
 
-                {{-- APPS --}}
+                {{-- INVOICES --}}
                 @include('layouts.partials.menu.invoices')
 
-                {{-- SETTINGS --}}
-                @include('layouts.partials.menu.settings')
+                {{-- DELIVERIES --}}
+                @include('layouts.partials.menu.deliveries')
 
-
+                {{-- MASTERS --}}
+                @include('layouts.partials.menu.master')
 
                 {{-- ADMINISTRATOR --}}
-                @canany(['users.show', 'roles.show', 'permissions.show'])
-                    <li class="nav-header">ADMINISTRATOR</li>
-                    <li class="nav-item">
-                        <a href="{{ url('users') }}" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-user-cog"></i>
-                            <p>Users</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('roles') }}" class="nav-link {{ Request::is('roles*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-user-tag"></i>
-                            <p>Roles</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('permissions') }}"
-                            class="nav-link {{ Request::is('permissions*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-user-lock"></i>
-                            <p>Permissions</p>
-                        </a>
-                    </li>
-                @endcanany
+                @hasanyrole(['admin', 'superadmin'])
+                    @include('layouts.partials.menu.settings')
+                @endhasanyrole
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

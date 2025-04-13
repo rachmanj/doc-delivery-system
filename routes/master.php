@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Master\DepartmentController;
 use App\Http\Controllers\Master\SupplierController;
 use App\Http\Controllers\Master\ProjectController;
+use App\Http\Controllers\Master\DepartmentController;
+use App\Http\Controllers\Master\AdditionalDocumentTypeController;
+use App\Http\Controllers\Master\InvoiceTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +17,21 @@ use App\Http\Controllers\Master\ProjectController;
 |
 */
 
-// Department Routes
-Route::resource('departments', DepartmentController::class);
+Route::prefix('master')->name('master.')->group(function () {
+    // Supplier Routes
+    Route::resource('suppliers', SupplierController::class);
+    
+    // Project Routes
+    Route::resource('projects', ProjectController::class);
+    
+    // Department Routes
+    Route::resource('departments', DepartmentController::class);
 
-// Supplier Routes
-Route::resource('suppliers', SupplierController::class);
-
-// Project Routes
-Route::resource('projects', ProjectController::class); 
+    // Additional Document Types Routes
+    Route::resource('additional-document-types', AdditionalDocumentTypeController::class, ['except' => ['show']]);
+    Route::get('additional-document-types/data', [AdditionalDocumentTypeController::class, 'data'])->name('additional-document-types.data');
+    
+    // Invoice Types Routes
+    Route::resource('invoice-types', InvoiceTypeController::class, ['except' => ['show']]);
+    Route::get('invoice-types/data', [InvoiceTypeController::class, 'data'])->name('invoice-types.data');
+}); 
