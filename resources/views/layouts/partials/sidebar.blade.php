@@ -47,6 +47,9 @@
                 {{-- INVOICES --}}
                 @include('layouts.partials.menu.invoices')
 
+                {{-- ADDITIONAL DOCUMENTS --}}
+                @include('layouts.partials.menu.additional-documents')
+
                 {{-- DELIVERIES --}}
                 @include('layouts.partials.menu.deliveries')
 

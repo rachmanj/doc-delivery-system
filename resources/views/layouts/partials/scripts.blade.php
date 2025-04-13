@@ -71,7 +71,7 @@
     }
 </script>
 
-@yield('scripts')
+@stack('scripts')
 
 <script>
     // Check for flash messages

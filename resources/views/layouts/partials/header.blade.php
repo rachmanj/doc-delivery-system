@@ -20,6 +20,6 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 
-    @yield('styles')
+    @stack('styles')
 
 </head>
