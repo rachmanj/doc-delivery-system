@@ -8,13 +8,14 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Document Details</h5>
                         <div class="btn-group" role="group">
-                            <a href="{{ route('documents.edit', $document) }}" class="btn btn-primary">
+                            <a href="{{ route('documents.edit', $document) }}" class="btn btn-primary btn-sm">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
+                            <div style="margin-left: 5px;"></div> <!-- Added gap -->
                             <form action="{{ route('documents.destroy', $document) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger"
+                                <button type="submit" class="btn btn-danger btn-sm"
                                     onclick="return confirm('Are you sure you want to delete this document?')">
                                     <i class="fas fa-trash"></i> Delete
                                 </button>

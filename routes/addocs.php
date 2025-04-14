@@ -6,6 +6,11 @@ use App\Http\Controllers\Documents\AdditionalDocumentController;
 
 // Additional Document Routes
 Route::prefix('documents')->name('documents.')->group(function () {
+    // Import routes should come before the {document} parameter routes
+    Route::get('/import', [AdditionalDocumentController::class, 'import'])->name('import');
+    Route::post('/import', [AdditionalDocumentController::class, 'importStore'])->name('import.store');
+    
+    // Other routes
     Route::get('/data', [AdditionalDocumentController::class, 'data'])->name('data');
     Route::get('/', [AdditionalDocumentController::class, 'index'])->name('index');
     Route::get('/create', [AdditionalDocumentController::class, 'create'])->name('create');

@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\AdditionalDocumentsImport;
 
 class AdditionalDocumentController extends Controller
 {
@@ -144,6 +146,37 @@ class AdditionalDocumentController extends Controller
         } catch (\Exception $e) {
             \Log::error('DataTables Error:', ['error' => $e->getMessage()]);
             return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function import()
+    {
+        \Log::info('Import route hit');
+        return view('documents.import');
+    }
+
+    public function importStore(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+            'check_duplicates' => 'nullable|boolean'
+        ]);
+
+        try {
+            $import = new AdditionalDocumentsImport($request->boolean('check_duplicates'));
+            Excel::import($import, $request->file('file'));
+
+            $message = sprintf(
+                'Documents imported successfully. %d records imported, %d records skipped.',
+                $import->getSuccessCount(),
+                $import->getSkippedCount()
+            );
+
+            return redirect()->route('documents.index')
+                ->with('success', $message);
+        } catch (\Exception $e) {
+            return redirect()->route('documents.import')
+                ->with('error', 'Error importing documents: ' . $e->getMessage());
         }
     }
 } 

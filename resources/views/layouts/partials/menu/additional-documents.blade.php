@@ -22,5 +22,12 @@
                 <p>Create Document</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('documents.import') }}"
+                class="nav-link {{ request()->routeIs('documents.import') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Import from Excel</p>
+            </a>
+        </li>
     </ul>
 </li>

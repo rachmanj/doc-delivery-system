@@ -8,19 +8,10 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="info text-center">
-                <a href="#" class="d-block">{{ auth()->user()->name }} ({{ auth()->user()->project }})</a>
-                <small class="text-white">{{ auth()->user()->department->name }}</small>
-            </div>
-        </div>
-
         <!-- SidebarSearch Form -->
         <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                    aria-label="Search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
                     <button class="btn btn-sidebar">
                         <i class="fas fa-search fa-fw"></i>
@@ -63,14 +54,6 @@
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
-    </div>
-    <div class="sidebar-custom">
-        <button type="button" class="btn btn-block btn-danger" onclick="confirmLogout()">
-            <i class="fas fa-sign-out-alt"></i>
-        </button>
-        <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
     </div>
     <!-- /.sidebar -->
 </aside>
