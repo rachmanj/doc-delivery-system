@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Middleware\CheckActive;
 
 Route::get('/', function () {
@@ -26,6 +27,9 @@ Route::middleware(['auth', CheckActive::class])->group(function () {
     Route::get('/home', function () {
         return view('home');
     })->name('home');
+    
+    // Password change route
+    Route::post('/password/change', [PasswordController::class, 'changePassword'])->name('password.change');
     
     // Load other route files from the routes directory 
     require __DIR__ . '/invoices.php';

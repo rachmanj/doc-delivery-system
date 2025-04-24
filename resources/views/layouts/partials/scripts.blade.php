@@ -71,6 +71,36 @@
     }
 </script>
 
+<!-- Password change validation -->
+<script>
+    $(document).ready(function() {
+        // Validate the change password form
+        $('#changePasswordModal form').submit(function(e) {
+            const password = $('#new_password').val();
+            const confirmation = $('#password_confirmation').val();
+
+            if (password !== confirmation) {
+                e.preventDefault();
+                toastr.error('New password and confirmation do not match');
+                return false;
+            }
+
+            if (password.length < 8) {
+                e.preventDefault();
+                toastr.error('Password must be at least 8 characters long');
+                return false;
+            }
+
+            return true;
+        });
+
+        // Reset form when modal is closed
+        $('#changePasswordModal').on('hidden.bs.modal', function() {
+            $('#changePasswordModal form')[0].reset();
+        });
+    });
+</script>
+
 @stack('scripts')
 
 <script>
