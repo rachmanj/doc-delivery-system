@@ -31,7 +31,7 @@
                             <h3 class="card-title">Welcome</h3>
                         </div>
                         <div class="card-body">
-                            <h5>Welcome to Document Delivery System</h5>
+                            <h5>Welcome to Document Distribution System</h5>
                             <p>You are logged in as {{ Auth::user()->name }}</p>
                         </div>
                     </div>

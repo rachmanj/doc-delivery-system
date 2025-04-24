@@ -128,6 +128,18 @@
     });
 </script>
 
+<!-- Navigation Menu JS -->
+<script>
+    $(document).ready(function() {
+        // Close dropdown when clicking outside
+        $(document).on('click', function(e) {
+            if (!$(e.target).closest('.dropdown').length) {
+                $('.dropdown-menu').removeClass('show');
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>

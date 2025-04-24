@@ -1,33 +1,20 @@
-{{-- MASTER DATA --}}
-<li class="nav-header">SETTINGS</li>
-<li
-    class="nav-item {{ Request::is('users*') || Request::is('roles*') || Request::is('permissions*') ? 'menu-open' : '' }}">
-    <a href="#"
-        class="nav-link {{ Request::is('users*') || Request::is('roles*') || Request::is('permissions*') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-users"></i>
-        <p>
-            Users
-            <i class="fas fa-angle-left right"></i>
-        </p>
-    </a>
-    <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a href="{{ url('users') }}" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-user"></i>
-                <p>Users</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ url('roles') }}" class="nav-link {{ Request::is('roles*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-user-tag"></i>
-                <p>Roles</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ url('permissions') }}" class="nav-link {{ Request::is('permissions*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-key"></i>
-                <p>Permissions</p>
-            </a>
-        </li>
+<li class="nav-item dropdown">
+    <a id="dropdownApprovals" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        class="nav-link dropdown-toggle">Settings</a>
+
+    <ul aria-labelledby="dropdownApprovals" class="dropdown-menu border-0 shadow">
+        <!-- Master Data Items -->
+        <h6 class="dropdown-header">Master Data</h6>
+        <a class="dropdown-item" href="{{ url('master/projects') }}">Projects</a>
+        <a class="dropdown-item" href="{{ url('master/suppliers') }}">Suppliers</a>
+        <a class="dropdown-item" href="{{ url('master/departments') }}">Departments</a>
+        <a class="dropdown-item" href="{{ url('master/invoice-types') }}">Invoice Types</a>
+        <a class="dropdown-item" href="{{ url('master/additional-document-types') }}">Document Types</a>
+        <div class="dropdown-divider"></div>
+        <!-- Settings Items -->
+        <h6 class="dropdown-header">Administration</h6>
+        <a class="dropdown-item" href="{{ url('settings/users') }}">Users</a>
+        <a class="dropdown-item" href="{{ url('settings/roles') }}">Roles</a>
+        <a class="dropdown-item" href="{{ url('settings/permissions') }}">Permissions</a>
     </ul>
 </li>

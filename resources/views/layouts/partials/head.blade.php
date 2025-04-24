@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'Document Delivery System' }} - DDS</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="{{ asset('assets/fontgoogle.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
@@ -20,6 +16,35 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 
-    @stack('styles')
+    <!-- Navigation menu custom styles -->
+    <style>
+        .navbar-dark .dropdown-menu {
+            background-color: #343a40;
+        }
+
+        .navbar-dark .dropdown-item {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .navbar-dark .dropdown-item:hover {
+            color: #fff;
+            background-color: #3f474e;
+        }
+
+        @media (max-width: 991.98px) {
+            .navbar-nav .dropdown-menu {
+                position: absolute;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .navbar .navbar-nav {
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+        }
+    </style>
+
+    @yield('styles')
 
 </head>

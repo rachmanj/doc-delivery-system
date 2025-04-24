@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login | Document Delivery System</title>
+    <title>Login | Document Distribution System</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -19,8 +19,11 @@
 
 <body class="hold-transition login-page">
     <div class="login-box">
-        <div class="login-logo">
-            <a href="{{ url('/') }}"><b>Document</b>Delivery</a>
+        <div class="login-logo text-center">
+            <a href="{{ url('/') }}">
+                <small class="d-block mb-0" style="line-height:1;"><b>Document Distribution</b></small>
+                <small class="d-block" style="line-height:1;">System</small>
+            </a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
