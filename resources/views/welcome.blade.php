@@ -147,7 +147,7 @@
         <div class="subtitle">Welcome to Document Distribution System, a System designed for
             streamlined document
             management and efficient workflow processes.</div>
-        <a href="/login" class="button">Go to Login</a>
+        <a href="{{ route('login') }}" class="button">Go to Login</a>
     </div>
 
     <div class="footer">
