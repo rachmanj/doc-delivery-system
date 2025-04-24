@@ -73,34 +73,25 @@
                         @enderror
                     </div>
                     <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" name="remember" id="remember"
-                                    {{ old('remember') ? 'checked' : '' }}>
-                                <label for="remember">
-                                    Remember Me
-                                </label>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-4">
+                        <div class="col-12">
                             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                         </div>
-                        <!-- /.col -->
                     </div>
-                </form>
-
-                <p class="mb-1">
-                    @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}">Forgot Your Password?</a>
-                    @endif
-                </p>
-                <p class="mb-0">
-                    <a href="{{ route('register') }}" class="text-center">Register a new account</a>
-                </p>
+                    <!-- /.col -->
             </div>
-            <!-- /.login-card-body -->
+            </form>
+
+            <p class="mb-1">
+                @if (Route::has('password.request'))
+                    <a href="{{ route('password.request') }}">Forgot Your Password?</a>
+                @endif
+            </p>
+            <p class="mb-0">
+                <a href="{{ route('register') }}" class="float-right pr-1">Register a new account</a>
+            </p>
         </div>
+        <!-- /.login-card-body -->
+    </div>
     </div>
     <!-- /.login-box -->
 

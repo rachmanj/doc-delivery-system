@@ -4,14 +4,14 @@
 {{-- HEAD --}}
 @include('layouts.partials.head')
 
-<body class="hold-transition layout-top-nav layout-navbar-fixed">
 
+<body class="hold-transition layout-top-nav layout-navbar-fixed">
     <div class="wrapper">
+        {{-- NAVBAR --}}
         @include('layouts.partials.navbar')
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" style="margin-left: 0;">
-
             {{-- CONTENT --}}
             <div class="content">
                 <div class="container-fluid">
@@ -20,6 +20,7 @@
             </div>
         </div>
 
+        {{-- FOOTER --}}
         @include('layouts.partials.footer')
     </div>
 
@@ -61,8 +62,10 @@
         </div>
     </div>
 
+    {{-- SCRIPTS --}}
     @include('layouts.partials.scripts')
-
+    {{-- Additional page scripts --}}
+    @stack('scripts')
 </body>
 
 </html>

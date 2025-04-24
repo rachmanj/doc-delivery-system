@@ -6,5 +6,4 @@
         <b>Version</b> 3.0.0
     </div>
 </footer>
-</div>
 <!-- ./wrapper -->

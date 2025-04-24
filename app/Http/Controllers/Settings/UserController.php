@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Department;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -58,7 +59,8 @@ class UserController extends Controller
     {
         $roles = Role::all();
         $departments = Department::all();
-        return view('settings.users.create', compact('roles', 'departments'));
+        $projects = Project::all();
+        return view('settings.users.create', compact('roles', 'departments', 'projects'));
     }
 
     /**
@@ -69,7 +71,8 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users'],
+            'nik' => ['nullable', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Password::defaults()],
             'department_id' => ['required', 'exists:departments,id'],
             'project' => ['nullable', 'string', 'max:255'],
@@ -80,15 +83,15 @@ class UserController extends Controller
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
+            'nik' => $request->nik,
             'password' => Hash::make($request->password),
             'department_id' => $request->department_id,
             'project' => $request->project,
             'is_active' => $request->has('is_active'),
         ]);
 
-        // Get role names from role IDs
-        $roleNames = Role::whereIn('id', $request->roles)->pluck('name')->toArray();
-        $user->syncRoles($roleNames);
+        // Use role names directly since the form now submits role names
+        $user->syncRoles($request->roles);
 
         return redirect()->route('users.index')
             ->with('success', 'User created successfully');
@@ -110,9 +113,10 @@ class UserController extends Controller
     {
         $roles = Role::all();
         $departments = Department::all();
+        $projects = Project::all();
         $userRoles = $user->roles->pluck('id')->toArray();
         
-        return view('settings.users.edit', compact('user', 'roles', 'departments', 'userRoles'));
+        return view('settings.users.edit', compact('user', 'roles', 'departments', 'projects', 'userRoles'));
     }
 
     /**
@@ -123,7 +127,8 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users,username,' . $user->id],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'nik' => ['nullable', 'string', 'max:255'],
             'department_id' => ['required', 'exists:departments,id'],
             'project' => ['nullable', 'string', 'max:255'],
             'roles' => ['required', 'array'],
@@ -141,11 +146,13 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
+        $user->nik = $request->nik;
         $user->department_id = $request->department_id;
         $user->project = $request->project;
         $user->is_active = $request->has('is_active');
         $user->save();
 
+        // Use role names directly since the form now submits role names
         $user->syncRoles($request->roles);
 
         return redirect()->route('users.index')

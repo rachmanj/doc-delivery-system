@@ -1,43 +1,67 @@
 @extends('layouts.main')
 
-@section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Additional Documents</h3>
-                        <div class="card-tools">
-                            <a href="{{ route('documents.create') }}" class="btn btn-success btn-sm">
-                                <i class="fas fa-plus"></i> Add New Document
-                            </a>
-                        </div>
-                    </div>
+@section('title', 'Additional Documents')
 
-                    <div class="card-body">
-                        <table id="documentsTable" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th width="5%">#</th>
-                                    <th>Document Number</th>
-                                    <th>Type</th>
-                                    <th>Date</th>
-                                    <th>PO No</th>
-                                    <th>Invoice</th>
-                                    <th>Receive Date</th>
-                                    <th>Remarks</th>
-                                    <th width="15%">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Static data will be loaded here -->
-                            </tbody>
-                        </table>
+@section('content')
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Additional Documents</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active">Documents</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Additional Documents</h3>
+                            <div class="card-tools">
+                                <a href="{{ route('documents.create') }}" class="btn btn-success btn-sm">
+                                    <i class="fas fa-plus"></i> Add New Document
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <table id="documentsTable" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th width="5%">#</th>
+                                        <th>Document Number</th>
+                                        <th>Type</th>
+                                        <th>Date</th>
+                                        <th>PO No</th>
+                                        <th>Invoice</th>
+                                        <th>Receive Date</th>
+                                        <th>Remarks</th>
+                                        <th width="15%">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Static data will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+    <!-- /.content -->
 @endsection
 
 @push('styles')

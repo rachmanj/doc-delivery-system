@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'username',
         'email',
+        'nik',
         'project',
         'department_id',
         'is_active',
