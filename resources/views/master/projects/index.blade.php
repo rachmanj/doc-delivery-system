@@ -107,6 +107,12 @@
     <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
     <script>
         $(function() {
+            // Check if DataTable is already initialized
+            if ($.fn.dataTable.isDataTable('#projects-table')) {
+                // If table is already initialized, destroy it first
+                $('#projects-table').DataTable().destroy();
+            }
+
             let table = $('#projects-table').DataTable({
                 processing: true,
                 serverSide: true,

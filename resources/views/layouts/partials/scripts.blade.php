@@ -101,8 +101,6 @@
     });
 </script>
 
-@stack('scripts')
-
 <script>
     // Check for flash messages
     document.addEventListener('DOMContentLoaded', function() {
@@ -169,3 +167,6 @@
         });
     });
 </script>
+
+<!-- Page specific scripts -->
+@stack('scripts')

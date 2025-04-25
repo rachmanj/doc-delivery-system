@@ -86,6 +86,12 @@
 
     <script>
         $(function() {
+            // Check if DataTable is already initialized
+            if ($.fn.dataTable.isDataTable('#documentsTable')) {
+                // If table is already initialized, destroy it first
+                $('#documentsTable').DataTable().destroy();
+            }
+
             $('#documentsTable').DataTable({
                 processing: true,
                 serverSide: true,

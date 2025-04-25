@@ -64,8 +64,6 @@
 
     {{-- SCRIPTS --}}
     @include('layouts.partials.scripts')
-    {{-- Additional page scripts --}}
-    @stack('scripts')
 </body>
 
 </html>
