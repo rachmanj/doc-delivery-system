@@ -49,7 +49,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="search_type">Document Type</label>
-                                            <select class="form-control" id="search_type" name="type_id">
+                                            <select class="form-control select2bs4" id="search_type" name="type_id">
                                                 <option value="">All Types</option>
                                                 @foreach ($types as $type)
                                                     <option value="{{ $type->id }}">{{ $type->type_name }}</option>
@@ -69,14 +69,20 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="search_invoice">Invoice Number</label>
-                                            <input type="text" class="form-control" id="search_invoice"
-                                                name="invoice_number" placeholder="Enter invoice number">
+                                            <select class="form-control select2bs4" id="search_invoice"
+                                                name="invoice_number">
+                                                <option value="">All Invoices</option>
+                                                @foreach ($invoices as $invoice)
+                                                    <option value="{{ $invoice->invoice_number }}">
+                                                        {{ $invoice->invoice_number }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="search_cur_loc">Current Location</label>
-                                            <select class="form-control" id="search_cur_loc" name="cur_loc">
+                                            <select class="form-control select2bs4" id="search_cur_loc" name="cur_loc">
                                                 <option value="">All Locations</option>
                                                 @foreach ($departments as $department)
                                                     <option value="{{ $department->location_code }}">{{ $department->name }}
@@ -148,6 +154,9 @@
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <style>
         .btn-group .btn {
             margin-right: 5px;
@@ -168,9 +177,17 @@
     <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
 
     <script>
         $(function() {
+            // Initialize Select2
+            $('.select2bs4').select2({
+                theme: 'bootstrap4',
+                width: '100%'
+            });
+
             let table;
 
             // Initialize DataTable with processing indicator but no initial data

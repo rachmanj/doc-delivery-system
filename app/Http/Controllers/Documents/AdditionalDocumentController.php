@@ -19,8 +19,9 @@ class AdditionalDocumentController extends Controller
     public function index()
     {
         $types = AdditionalDocumentType::all();
-        $departments = Department::all();
-        return view('documents.index', compact('types', 'departments'));
+        $departments = Department::orderBy('name', 'asc')->get();
+        $invoices = Invoice::orderBy('invoice_number', 'asc')->get();
+        return view('documents.index', compact('types', 'departments', 'invoices'));
     }
 
     public function create()
