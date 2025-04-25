@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Additional Documents</h1>
+                    <h1 class="m-0">List</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -24,6 +24,86 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
+            <!-- Search Panel -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Search Documents</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form id="searchForm">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="search_document_number">Document Number</label>
+                                            <input type="text" class="form-control" id="search_document_number"
+                                                name="document_number" placeholder="Enter document number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="search_type">Document Type</label>
+                                            <select class="form-control" id="search_type" name="type_id">
+                                                <option value="">All Types</option>
+                                                @foreach ($types as $type)
+                                                    <option value="{{ $type->id }}">{{ $type->type_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="search_po_no">PO Number</label>
+                                            <input type="text" class="form-control" id="search_po_no" name="po_no"
+                                                placeholder="Enter PO number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="search_invoice">Invoice Number</label>
+                                            <input type="text" class="form-control" id="search_invoice"
+                                                name="invoice_number" placeholder="Enter invoice number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="search_cur_loc">Current Location</label>
+                                            <select class="form-control" id="search_cur_loc" name="cur_loc">
+                                                <option value="">All Locations</option>
+                                                @foreach ($departments as $department)
+                                                    <option value="{{ $department->location_code }}">{{ $department->name }}
+                                                        ({{ $department->location_code }})
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group pt-4 mt-2">
+                                            <button type="button" id="searchButton" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-search"></i> Search
+                                            </button>
+                                            <button type="button" id="resetButton" class="btn btn-sm btn-default">
+                                                <i class="fas fa-undo"></i> Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Table -->
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -37,22 +117,22 @@
                         </div>
 
                         <div class="card-body">
-                            <table id="documentsTable" class="table table-bordered table-striped">
+                            <table id="documentsTable" class="table table-bordered table-striped table-sm">
                                 <thead>
                                     <tr>
-                                        <th width="5%">#</th>
-                                        <th>Document Number</th>
-                                        <th>Type</th>
-                                        <th>Date</th>
-                                        <th>PO No</th>
-                                        <th>Invoice</th>
-                                        <th>Receive Date</th>
-                                        <th>Remarks</th>
-                                        <th width="15%">Actions</th>
+                                        <th width="3%">#</th>
+                                        <th width="15%">Document Number</th>
+                                        <th width="10%">Type</th>
+                                        <th width="10%">Date</th>
+                                        <th width="10%">PO No</th>
+                                        <th width="10%">Invoice</th>
+                                        <th width="10%">Receive Date</th>
+                                        <th width="15%">Current Location</th>
+                                        <th width="10%">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Static data will be loaded here -->
+                                    <!-- Data will be loaded here -->
                                 </tbody>
                             </table>
                         </div>
@@ -72,6 +152,11 @@
         .btn-group .btn {
             margin-right: 5px;
         }
+
+        .table-sm td,
+        .table-sm th {
+            padding: 0.3rem;
+        }
     </style>
 @endpush
 
@@ -86,68 +171,108 @@
 
     <script>
         $(function() {
-            // Check if DataTable is already initialized
-            if ($.fn.dataTable.isDataTable('#documentsTable')) {
-                // If table is already initialized, destroy it first
-                $('#documentsTable').DataTable().destroy();
-            }
+            let table;
 
-            $('#documentsTable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('documents.data') }}",
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'document_number',
-                        name: 'document_number'
-                    },
-                    {
-                        data: 'type.type_name',
-                        name: 'type.type_name'
-                    },
-                    {
-                        data: 'document_date',
-                        name: 'document_date',
-                        render: function(data) {
-                            return moment(data).format('DD-MMM-YYYY');
+            // Initialize DataTable with processing indicator but no initial data
+            initializeTable(false);
+
+            // Search button click
+            $('#searchButton').on('click', function() {
+                if (table) {
+                    table.destroy();
+                }
+                initializeTable(true);
+            });
+
+            // Reset button click
+            $('#resetButton').on('click', function() {
+                $('#searchForm')[0].reset();
+                if (table) {
+                    table.destroy();
+                }
+                initializeTable(false);
+            });
+
+            // Initialize the DataTable
+            function initializeTable(loadData) {
+                table = $('#documentsTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    searching: false, // Disable built-in search as we have custom search
+                    ajax: {
+                        url: "{{ route('documents.data') }}",
+                        type: "GET",
+                        data: function(d) {
+                            if (loadData) {
+                                d.document_number = $('#search_document_number').val();
+                                d.type_id = $('#search_type').val();
+                                d.po_no = $('#search_po_no').val();
+                                d.invoice_number = $('#search_invoice').val();
+                                d.cur_loc = $('#search_cur_loc').val();
+                            } else {
+                                // Send flag to return empty dataset on initial load
+                                d.initial_load = true;
+                            }
                         }
                     },
-                    {
-                        data: 'po_no',
-                        name: 'po_no'
-                    },
-                    {
-                        data: 'invoice.invoice_number',
-                        name: 'invoice.invoice_number',
-                        defaultContent: 'N/A'
-                    },
-                    {
-                        data: 'receive_date',
-                        name: 'receive_date',
-                        render: function(data) {
-                            return data ? moment(data).format('DD-MMM-YYYY') : 'N/A';
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex',
+                            orderable: false,
+                            searchable: false
                         },
-                        defaultContent: 'N/A'
-                    },
-                    {
-                        data: 'remarks',
-                        name: 'remarks',
-                        defaultContent: 'N/A'
-                    },
-                    {
-                        data: 'actions',
-                        name: 'actions',
-                        orderable: false,
-                        searchable: false
-                    }
-                ],
-                responsive: true
-            });
+                        {
+                            data: 'document_number',
+                            name: 'document_number'
+                        },
+                        {
+                            data: 'type.type_name',
+                            name: 'type.type_name'
+                        },
+                        {
+                            data: 'document_date',
+                            name: 'document_date',
+                            render: function(data) {
+                                return moment(data).format('DD-MMM-YYYY');
+                            }
+                        },
+                        {
+                            data: 'po_no',
+                            name: 'po_no'
+                        },
+                        {
+                            data: 'invoice.invoice_number',
+                            name: 'invoice.invoice_number',
+                            defaultContent: 'N/A'
+                        },
+                        {
+                            data: 'receive_date',
+                            name: 'receive_date',
+                            render: function(data) {
+                                return data ? moment(data).format('DD-MMM-YYYY') : 'N/A';
+                            },
+                            defaultContent: 'N/A'
+                        },
+                        {
+                            data: 'cur_loc',
+                            name: 'cur_loc',
+                            defaultContent: 'N/A'
+                        },
+                        {
+                            data: 'actions',
+                            name: 'actions',
+                            orderable: false,
+                            searchable: false
+                        }
+                    ],
+                    responsive: true,
+                    pageLength: 25,
+                    lengthMenu: [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, "All"]
+                    ]
+                });
+            }
 
             // Handle document deletion with SweetAlert2
             $(document).on('click', '.delete-document', function(e) {

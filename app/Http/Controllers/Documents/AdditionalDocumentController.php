@@ -18,7 +18,9 @@ class AdditionalDocumentController extends Controller
 {
     public function index()
     {
-        return view('documents.index');
+        $types = AdditionalDocumentType::all();
+        $departments = Department::all();
+        return view('documents.index', compact('types', 'departments'));
     }
 
     public function create()
@@ -128,11 +130,38 @@ class AdditionalDocumentController extends Controller
             ->with('success', 'Document deleted successfully.');
     }
 
-    public function data()
+    public function data(Request $request)
     {
         try {
-            $query = AdditionalDocument::with(['type', 'invoice'])
-                ->select('additional_documents.*');
+            // Return empty dataset on initial load
+            if ($request->has('initial_load')) {
+                return DataTables::of(AdditionalDocument::where('id', 0))->make(true);
+            }
+            
+            $query = AdditionalDocument::with(['type', 'invoice']);
+            
+            // Apply filters if search is being performed
+            if ($request->filled('document_number')) {
+                $query->where('document_number', 'like', '%' . $request->document_number . '%');
+            }
+            
+            if ($request->filled('type_id')) {
+                $query->where('type_id', $request->type_id);
+            }
+            
+            if ($request->filled('po_no')) {
+                $query->where('po_no', 'like', '%' . $request->po_no . '%');
+            }
+            
+            if ($request->filled('invoice_number')) {
+                $query->whereHas('invoice', function($q) use ($request) {
+                    $q->where('invoice_number', 'like', '%' . $request->invoice_number . '%');
+                });
+            }
+            
+            if ($request->filled('cur_loc')) {
+                $query->where('cur_loc', $request->cur_loc);
+            }
 
             \Log::info('DataTables Query:', ['query' => $query->toSql(), 'bindings' => $query->getBindings()]);
 
@@ -151,7 +180,6 @@ class AdditionalDocumentController extends Controller
 
     public function import()
     {
-        \Log::info('Import route hit');
         return view('documents.import');
     }
 

@@ -46,7 +46,7 @@ class AdditionalDocumentsImport implements ToModel, WithHeadingRow, WithValidati
                 'invoice_id' => isset($row['invoice_id']) ? (string)$row['invoice_id'] : null,
                 'receive_date' => isset($row['receive_date']) ? $this->convert_date($row['receive_date']) : null,
                 'remarks' => isset($row['ito_remarks']) ? (string)$row['ito_remarks'] : null,
-                'cur_loc' => '000H-LOG',
+                'cur_loc' => '000HLOG',
                 'ito_creator' => isset($row['ito_created_by']) ? (string)$row['ito_created_by'] : null,
                 'grpo_no' => isset($row['grpo_no']) ? (string)$row['grpo_no'] : null,
                 'origin_wh' => isset($row['origin_wh']) ? (string)$row['origin_wh'] : null,
